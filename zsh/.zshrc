@@ -117,10 +117,13 @@ source $ZSH/oh-my-zsh.sh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# ⚙️ Avvio automatico tmux (senza rompere l'instant prompt di Powerlevel10k)
-if [[ -z "$TMUX" && -n "$PS1" && $TERM != "dumb" ]]; then
-  # Avvia o riattacca la sessione principale in background per evitare output durante init
-  (tmux attach -t main || tmux new -s main) > /dev/null 2>&1
-  exit
+# ⚙️ Avvio automatico di tmux (compatibile con Powerlevel10k e macOS)
+if command -v tmux &>/dev/null && [ -z "$TMUX" ] && [ -t 1 ]; then
+  tmux has-session -t main 2>/dev/null
+  if [ $? != 0 ]; then
+    tmux new-session -d -s main
+  fi
+  exec tmux attach -t main
 fi
+
 
