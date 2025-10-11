@@ -117,13 +117,21 @@ source $ZSH/oh-my-zsh.sh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# ⚙️ Avvio automatico di tmux (compatibile con Powerlevel10k e macOS)
+# ⚙️ Avvio automatico di tmux - Sessioni separate per ogni terminale
 if command -v tmux &>/dev/null && [ -z "$TMUX" ] && [ -t 1 ]; then
-  tmux has-session -t main 2>/dev/null
-  if [ $? != 0 ]; then
-    tmux new-session -d -s main
+  # Usa iTerm2 session ID per nome univoco, altrimenti usa PID
+  if [[ -n "$ITERM_SESSION_ID" ]]; then
+    # Estrae solo una parte dell'ID per nome più corto
+    session_name="iterm-${ITERM_SESSION_ID:(-8)}"
+  else
+    # Fallback: usa PID della shell
+    session_name="term-$$"
   fi
-  exec tmux attach -t main
+  
+  # Crea sessione solo se non esiste già
+  if ! tmux has-session -t "$session_name" 2>/dev/null; then
+    tmux new-session -d -s "$session_name"
+  fi
+  
+  exec tmux attach -t "$session_name"
 fi
-
-
