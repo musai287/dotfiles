@@ -135,3 +135,4 @@ if command -v tmux &>/dev/null && [ -z "$TMUX" ] && [ -t 1 ]; then
   
   exec tmux attach -t "$session_name"
 fi
+alias runSito="cd ~/robeCAHC/ProvaSito && python3 -m http.server 8000"
