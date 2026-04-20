@@ -31,7 +31,6 @@ return {
       [vim.diagnostic.severity.HINT] = "󰠠 ",
       [vim.diagnostic.severity.INFO] = " ",
     }
-    
     vim.diagnostic.config({
       signs = { text = signs },
       virtual_text = true,
