@@ -127,7 +127,7 @@ return {
                     { section = "startup" },
                     {
                         section = "terminal",
-                        cmd = "ascii-image-converter '/Users/mattia/Pictures/logo copia 2.jpeg' -C -c",
+                        cmd = "ascii-image-converter '" .. vim.fn.expand("~/dotfiles/assets/logo.jpeg") .. "' -C -c",
                         random = 15,
                         pane = 2,
                         indent = 15,
