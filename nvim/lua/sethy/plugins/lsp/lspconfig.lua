@@ -40,7 +40,6 @@ return {
 
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
     local capabilities = cmp_nvim_lsp.default_capabilities()
-    local lsp_util = require("lspconfig.util")
 
     local servers = {
       lua_ls = {
@@ -60,12 +59,19 @@ return {
         filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
       },
       denols = {
-        root_dir = lsp_util.root_pattern("deno.json", "deno.jsonc"),
+        root_dir = function(fname)
+          -- Usa la nuova API nativa di Neovim
+          return vim.fs.root(fname, { "deno.json", "deno.jsonc" })
+        end,
       },
       ts_ls = {
         root_dir = function(fname)
-          return not lsp_util.root_pattern("deno.json", "deno.jsonc")(fname)
-            and lsp_util.root_pattern("tsconfig.json", "package.json", "jsconfig.json", ".git")(fname)
+          -- Logica TypeScript: se trova deno, si spegne. Altrimenti cerca i file TS.
+          local has_deno = vim.fs.root(fname, { "deno.json", "deno.jsonc" })
+          if has_deno then
+            return nil
+          end
+          return vim.fs.root(fname, { "tsconfig.json", "package.json", "jsconfig.json", ".git" })
         end,
         single_file_support = false,
       },
