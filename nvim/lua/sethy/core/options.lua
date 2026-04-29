@@ -83,4 +83,20 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     -- vim.api.nvim_set_hl(0, "FloatTitle", { fg = "#89b4fa", bold = true })
   end,
 })
-
+-- =========================================================================
+-- AUTORUN ZENMODE
+-- Lancia ZenMode automaticamente all'avvio di Neovim
+-- =========================================================================
+vim.api.nvim_create_autocmd("VimEnter", {
+    group = vim.api.nvim_create_augroup("AutoZenMode", { clear = true }),
+    callback = function()
+        -- vim.schedule aspetta che la UI sia completamente disegnata
+        vim.schedule(function()
+            -- Controlla che ZenMode esista per evitare errori se un giorno lo rimuovi
+            local ok, _ = pcall(vim.cmd, "ZenMode")
+            if not ok then
+                vim.notify("ZenMode non trovato, controlla lazy.nvim", vim.log.levels.WARN)
+            end
+        end)
+    end,
+})

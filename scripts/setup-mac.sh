@@ -1,73 +1,162 @@
 #!/bin/bash
 
-echo "🍏 Dotfiles Mac Setup (tmux + zsh + nvim + plugin + font)"
+# =========================================================================
+# SCRIPT DI INSTALLAZIONE DOTFILES (macOS)
+# =========================================================================
 
-# 1. Installa Homebrew se non c'è
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+DOTFILES_DIR="$HOME/dotfiles"
+BACKUP_DIR="$HOME/dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
+
+echo -e "${BLUE}=======================================${NC}"
+echo -e "${GREEN}    🍏 Setup Dotfiles Mac di Sethy     ${NC}"
+echo -e "${BLUE}=======================================${NC}\n"
+
+# ---------------------------------------------------------
+# FUNZIONI DI SUPPORTO
+# ---------------------------------------------------------
+ask() {
+    local prompt="$1"
+    while true; do
+        read -p "$(echo -e ${YELLOW}"Vuoi installare e configurare $prompt? [s/N]: "${NC})" yn
+        case $yn in
+            [Ss]* ) return 0;;
+            [Nn]* | "" ) return 1;;
+            * ) echo -e "${RED}Rispondi 's' o 'n'.${NC}";;
+        esac
+    done
+}
+
+link_file() {
+    local src="$1"
+    local dest="$2"
+
+    if [ -e "$dest" ] || [ -L "$dest" ]; then
+        if [ "$(readlink "$dest")" = "$src" ]; then
+            echo -e "${GREEN}  ✓ Symlink già corretto: $dest${NC}"
+            return
+        else
+            echo -e "${YELLOW}  ! Backup config esistente: $dest${NC}"
+            mkdir -p "$BACKUP_DIR"
+            mv "$dest" "$BACKUP_DIR/"
+        fi
+    fi
+
+    mkdir -p "$(dirname "$dest")"
+    ln -s "$src" "$dest"
+    echo -e "${GREEN}  ✓ Creato: $dest -> $src${NC}"
+}
+
+# ---------------------------------------------------------
+# 1. HOMEBREW (Obbligatorio su Mac)
+# ---------------------------------------------------------
 if ! command -v brew &> /dev/null; then
-    echo "💡 Installo Homebrew..."
+    echo -e "${YELLOW}Homebrew non trovato. Installazione in corso...${NC}"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    # Aggiunge brew al PATH temporaneamente per lo script (sui Mac Apple Silicon)
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+    echo -e "${GREEN}Homebrew è già installato.${NC}"
+    echo -e "${BLUE}Aggiorno Homebrew...${NC}"
+    brew update >/dev/null 2>&1
 fi
 
-# 2. Installa pacchetti base (Aggiunto neovim e ripgrep)
-echo "💡 Installo i pacchetti base..."
-brew install git tmux zsh curl neovim ripgrep fontconfig
+# ---------------------------------------------------------
+# INSTALLAZIONI E SYMLINK (Interattivi)
+# ---------------------------------------------------------
 
-# 3. Installa Nerd Fonts (JetBrains Mono) - Fix: tap deprecato
-echo "💡 Installo i font..."
-brew install --cask font-jetbrains-mono-nerd-font
-
-# 4. Symlink tmux.conf
-echo "💡 Configuro tmux..."
-mkdir -p ~/.config/tmux
-rm -f ~/.config/tmux/tmux.conf
-ln -sf ~/dotfiles/tmux/.tmux.conf ~/.config/tmux/tmux.conf
-
-# 5. Installa TPM e Catppuccin
-mkdir -p ~/.config/tmux/.tmux/plugins
-if [ ! -d ~/.config/tmux/.tmux/plugins/tpm ]; then
-    git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/.tmux/plugins/tpm
-fi
-if [ ! -d ~/.config/tmux/.tmux/plugins/catppuccin ]; then
-    git clone https://github.com/catppuccin/tmux ~/.config/tmux/.tmux/plugins/catppuccin
+# --- FONT ---
+if ask "Nerd Fonts (JetBrains Mono per icone e terminale)"; then
+    echo -e "${BLUE}Installazione font...${NC}"
+    brew install --cask font-jetbrains-mono-nerd-font
 fi
 
-# 6. Symlink Neovim (La nostra nuova aggiunta!)
-echo "💡 Configuro Neovim..."
-rm -rf ~/.config/nvim
-ln -s ~/dotfiles/nvim ~/.config/nvim
+# --- ZSH & POWERLEVEL10K ---
+if ask "Zsh, Oh My Zsh, Powerlevel10k e Plugin"; then
+    echo -e "${BLUE}Installazione pacchetti base...${NC}"
+    brew install zsh curl git
 
-# 7. Symlink zshrc
-echo "💡 Configuro Zsh..."
-rm -f ~/.zshrc
-ln -sf ~/dotfiles/zsh/.zshrc ~/.zshrc
+    if [ ! -d "$HOME/.oh-my-zsh" ]; then
+        echo -e "${BLUE}Installazione Oh My Zsh...${NC}"
+        RUNZSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    fi
 
-# 8. Installa Oh My Zsh (Fix: Installazione silenziosa)
-if [ ! -d ~/.oh-my-zsh ]; then
-    echo "💡 Installo Oh My Zsh..."
-    RUNZSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    ZSH_CUSTOM=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
+    
+    # Powerlevel10k
+    if [ ! -d "$ZSH_CUSTOM/themes/powerlevel10k" ]; then
+        echo -e "${BLUE}Installazione Powerlevel10k...${NC}"
+        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$ZSH_CUSTOM/themes/powerlevel10k"
+    fi
+
+    # Plugin
+    [ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ] && git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
+    [ ! -d "$ZSH_CUSTOM/plugins/zsh-completions" ] && git clone https://github.com/zsh-users/zsh-completions "$ZSH_CUSTOM/plugins/zsh-completions"
+    [ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ] && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
+
+    echo -e "${BLUE}Creazione symlink per Zsh...${NC}"
+    link_file "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
+    
+    if [ "$SHELL" != "$(which zsh)" ]; then
+        echo -e "${YELLOW}Imposto Zsh come shell di default (potrebbe chiedere la password)...${NC}"
+        chsh -s $(which zsh)
+    fi
 fi
 
-# Installa Powerlevel10k
-if [ ! -d ~/.oh-my-zsh/custom/themes/powerlevel10k ]; then
-    echo "💡 Installo Powerlevel10k..."
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k
+# --- NEOVIM ---
+if ask "Neovim e dipendenze (Ripgrep, ecc.)"; then
+    echo -e "${BLUE}Installazione Neovim e tool di ricerca...${NC}"
+    # Su Mac gcc/make sono inclusi in Xcode Command Line Tools, che brew installa.
+    brew install neovim ripgrep
+
+    echo -e "${BLUE}Creazione symlink per Neovim...${NC}"
+    link_file "$DOTFILES_DIR/nvim" "$HOME/.config/nvim"
 fi
 
-# 9. Installa plugin Oh My Zsh
-echo "💡 Installo plugin per Zsh..."
-ZSH_CUSTOM=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
-[ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ] && git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
-[ ! -d "$ZSH_CUSTOM/plugins/zsh-completions" ] && git clone https://github.com/zsh-users/zsh-completions $ZSH_CUSTOM/plugins/zsh-completions
-[ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ] && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+# --- TMUX ---
+if ask "Tmux e plugin (TPM, Catppuccin)"; then
+    echo -e "${BLUE}Installazione Tmux...${NC}"
+    brew install tmux
 
-# 10. Imposta zsh come shell di default (solo se non lo è già)
-if [ "$SHELL" != "$(which zsh)" ]; then
-    echo "💡 Imposto Zsh come shell di default (potrebbe chiedere la password)..."
-    chsh -s $(which zsh)
+    echo -e "${BLUE}Configurazione Tmux e Plugin Manager...${NC}"
+    mkdir -p "$HOME/.config/tmux/.tmux/plugins"
+    
+    if [ ! -d "$HOME/.config/tmux/.tmux/plugins/tpm" ]; then
+        git clone https://github.com/tmux-plugins/tpm "$HOME/.config/tmux/.tmux/plugins/tpm"
+    fi
+    if [ ! -d "$HOME/.config/tmux/.tmux/plugins/catppuccin" ]; then
+        git clone https://github.com/catppuccin/tmux "$HOME/.config/tmux/.tmux/plugins/catppuccin"
+    fi
+
+    # Symlink per tmux.conf dal tuo repo alla cartella .config/tmux
+    link_file "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/.config/tmux/tmux.conf"
 fi
 
-echo ""
-echo "✅ Setup completato!"
-echo "👉 Apri una nuova shell per vedere i cambiamenti."
-echo "👉 Dentro tmux, premi: Ctrl+B poi Shift+I per installare tutti i plugin."
-echo ""
+# --- KITTY TERMINAL ---
+if ask "Kitty Terminal"; then
+    echo -e "${BLUE}Installazione Kitty...${NC}"
+    brew install --cask kitty
+
+    echo -e "${BLUE}Creazione symlink per Kitty...${NC}"
+    link_file "$DOTFILES_DIR/kitty" "$HOME/.config/kitty"
+fi
+
+# ---------------------------------------------------------
+# FINE
+# ---------------------------------------------------------
+echo -e "\n${GREEN}=======================================${NC}"
+echo -e "${GREEN}      Setup macOS completato!          ${NC}"
+if [ -d "$BACKUP_DIR" ] && [ "$(ls -A $BACKUP_DIR)" ]; then
+    echo -e "${YELLOW}I backup delle vecchie config sono in: $BACKUP_DIR${NC}"
+fi
+echo -e "${GREEN}=======================================${NC}"
+echo -e "👉 ${YELLOW}Ricorda: dentro tmux, premi 'Ctrl+B' poi 'Shift+I' per installare i plugin.${NC}"
+
+if ask "Vuoi avviare Zsh ora per caricare tutte le novità?"; then
+    exec zsh
+fi

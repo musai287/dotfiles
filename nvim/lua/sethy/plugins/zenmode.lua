@@ -3,9 +3,9 @@ return {
   cmd = "ZenMode",
   opts = {
     window = {
-      backdrop = 0.8, -- Oscura leggermente lo sfondo di Kitty
-      width = 0.85,   -- Larghezza della finestra
-      height = 0.85,  -- Altezza della finestra
+      backdrop = 0.7, -- Oscura leggermente lo sfondo di Kitty
+      width = 0.95,   -- Larghezza della finestra
+      height = 0.95,  -- Altezza della finestra
       options = {
         signcolumn = "no",
         number = false,
