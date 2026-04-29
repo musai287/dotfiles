@@ -17,12 +17,13 @@ return {
         -- NOTE: Moved these local imports below back to lspconfig.lua due to mason depracated handlers
 
         -- local lspconfig = require("lspconfig")
-        -- local cmp_nvim_lsp = require("cmp_nvim_lsp")             -- import cmp-nvim-lsp plugin
+        -- local cmp_nvim_lsp = require("cmp_nvim_lsp")              -- import cmp-nvim-lsp plugin
         -- local capabilities = cmp_nvim_lsp.default_capabilities() -- used to enable autocompletion (assign to every lsp server config)
 
         -- enable mason and configure icons
         mason.setup({
             ui = {
+                border = "rounded", -- === AGGIUNTA BORDO QUI ===
                 icons = {
                     package_installed = "✓",
                     package_pending = "➜",

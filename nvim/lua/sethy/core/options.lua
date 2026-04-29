@@ -58,3 +58,29 @@ vim.opt.mouse = "a"
 
 -- gets rid of line with white spaces
 vim.g.editorconfig = true
+
+-- Migliora l'estetica dei bordi degli split in Neovim
+vim.opt.fillchars = {
+  vert = '│',
+  horiz = '─',
+  vertright = '├',
+  vertleft = '┤',
+  verthoriz = '┼',
+}
+-- ==========================================
+-- FORZA I COLORI DEI BORDI FLUTTUANTI
+-- ==========================================
+-- Questo autocmd scatta ogni volta che carichi un tema e si assicura 
+-- che i bordi non vengano mai resi invisibili dalla trasparenza.
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+  pattern = "*",
+  callback = function()
+    -- Colore del bordo (qui ho messo l'azzurro di Catppuccin/Tokyonight)
+    vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#89b4fa" })
+    
+    -- Se vuoi colorare anche il titolo del popup, decommenta qui sotto:
+    -- vim.api.nvim_set_hl(0, "FloatTitle", { fg = "#89b4fa", bold = true })
+  end,
+})
+

@@ -6,6 +6,18 @@ return {
     { "antosha417/nvim-lsp-file-operations", config = true },
   },
   config = function()
+    -- === INIZIO AGGIUNTA BORDI ===
+    local border_style = "rounded" -- Puoi cambiare in "single" per bordi netti
+
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+      vim.lsp.handlers.hover, { border = border_style }
+    )
+
+    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+      vim.lsp.handlers.signature_help, { border = border_style }
+    )
+    -- === FINE AGGIUNTA BORDI ===
+
     vim.api.nvim_create_autocmd("LspAttach", {
       group = vim.api.nvim_create_augroup("UserLspConfig", {}),
       callback = function(ev)
@@ -27,15 +39,17 @@ return {
 
     local signs = {
       [vim.diagnostic.severity.ERROR] = " ",
-      [vim.diagnostic.severity.WARN] = " ",
-      [vim.diagnostic.severity.HINT] = "󰠠 ",
-      [vim.diagnostic.severity.INFO] = " ",
+      [vim.diagnostic.severity.WARN]  = " ",
+      [vim.diagnostic.severity.HINT]  = "󰠠 ",
+      [vim.diagnostic.severity.INFO]  = " ",
     }
+    
     vim.diagnostic.config({
       signs = { text = signs },
       virtual_text = true,
       underline = true,
       update_in_insert = false,
+      float = { border = border_style }, -- Aggiunta per il bordo dei popup degli errori!
     })
 
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
@@ -60,13 +74,11 @@ return {
       },
       denols = {
         root_dir = function(fname)
-          -- Usa la nuova API nativa di Neovim
           return vim.fs.root(fname, { "deno.json", "deno.jsonc" })
         end,
       },
       ts_ls = {
         root_dir = function(fname)
-          -- Logica TypeScript: se trova deno, si spegne. Altrimenti cerca i file TS.
           local has_deno = vim.fs.root(fname, { "deno.json", "deno.jsonc" })
           if has_deno then
             return nil
