@@ -281,3 +281,6 @@ fi
 alias runSito="cd ~/robeCAHC/ProvaSito && python3 -m http.server 8000"
 alias pydoc="python3 -m pydoc"
 
+export TERMINAL="kitty"
+export TERMINAL="kitty"
+export TERMINAL="kitty"

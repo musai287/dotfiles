@@ -84,19 +84,21 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   end,
 })
 -- =========================================================================
--- AUTORUN ZENMODE
--- Lancia ZenMode automaticamente all'avvio di Neovim
+-- AUTORUN ZENMODE (Con Dashboard Impaginata)
+-- Lancia ZenMode ovunque, aspettando che i plugin finiscano di caricare
 -- =========================================================================
 vim.api.nvim_create_autocmd("VimEnter", {
     group = vim.api.nvim_create_augroup("AutoZenMode", { clear = true }),
     callback = function()
-        -- vim.schedule aspetta che la UI sia completamente disegnata
-        vim.schedule(function()
-            -- Controlla che ZenMode esista per evitare errori se un giorno lo rimuovi
-            local ok, _ = pcall(vim.cmd, "ZenMode")
-            if not ok then
-                vim.notify("ZenMode non trovato, controlla lazy.nvim", vim.log.levels.WARN)
+        -- Aumentiamo il ritardo a 150ms. Snacks ha il tempo di creare la dashboard,
+        -- e subito dopo ZenMode la "incornicia" senza crashare.
+        vim.defer_fn(function()
+            local ok, zen_view = pcall(require, "zen-mode.view")
+            
+            -- Se ZenMode è installato, non è già aperto, e la finestra è valida
+            if ok and not zen_view.is_open() and vim.api.nvim_win_is_valid(0) then
+                pcall(vim.cmd, "ZenMode")
             end
-        end)
+        end, 150)
     end,
 })
