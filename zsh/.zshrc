@@ -281,6 +281,11 @@ fi
 alias runSito="cd ~/robeCAHC/ProvaSito && python3 -m http.server 8000"
 alias pydoc="python3 -m pydoc"
 
+# Carica configurazioni o alias locali specifici della macchina
+if [[ -f ~/.zshrc.local ]]; then
+    source ~/.zshrc.local
+fi
+
 export TERMINAL="kitty"
 export TERMINAL="kitty"
 export TERMINAL="kitty"
