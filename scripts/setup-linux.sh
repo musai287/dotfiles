@@ -138,8 +138,8 @@ if ask "Yazi (File manager), Glow (Markdown) e FFmpeg"; then
         # Setup per Fedora
         sudo dnf copr enable -y lihaohong/yazi
         sudo sh -c 'echo -e "[charm]\nname=Charm\nbaseurl=https://repo.charm.sh/yum/\nenabled=1\ngpgcheck=1\ngpgkey=https://repo.charm.sh/yum/gpg.key" > /etc/yum.repos.d/charm.repo'
-        $PKG_INSTALL yazi ffmpeg glow
-    elif command -v apt >/dev/null 2>&1; then
+         sudo dnf install -y yazi ffmpeg glow --allowerasing
+     elif command -v apt >/dev/null 2>&1; then
         # Setup per Debian/Ubuntu
         $PKG_INSTALL ffmpeg curl gpg
         # Repository ufficiale per Glow
@@ -163,6 +163,7 @@ if [ -d "$BACKUP_DIR" ] && [ "$(ls -A $BACKUP_DIR)" ]; then
     echo -e "${YELLOW}I backup delle vecchie config sono in: $BACKUP_DIR${NC}"
 fi
 echo -e "${GREEN}=======================================${NC}"
-if ask "Vuoi avviare Zsh ora per completare il setup?"; then
+read -p "$(echo -e ${YELLOW}"Vuoi avviare Zsh ora per completare il setup? [s/N]: "${NC})" yn
+if [[ "$yn" =~ ^[Ss] ]]; then
     exec zsh
 fi
