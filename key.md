@@ -1,150 +1,128 @@
-# Cheatsheet Dotfiles
+# Cheatsheet Dotfiles & Workspace
 
-Di seguito trovi tutte le tue scorciatoie organizzate e pronte per essere salvate come file `KEYBINDINGS.md` o `README.md` nella tua repository. 
+Questo documento contiene sia le scorciatoie personalizzate (Custom) sia i comandi nativi (Default) più importanti per navigare l'ambiente di sviluppo.
 
 ## 🐱 Kitty (Terminale)
 
-| Scorciatoia | Azione |
-| :--- | :--- |
-| `Super + ,` | Apri il file di configurazione nell'editor |
-| `Super + r` | Ricarica la configurazione al volo |
+| Scorciatoia | Tipo | Azione |
+| :--- | :--- | :--- |
+| `Super + ,` | Custom | Apri il file di configurazione nell'editor |
+| `Super + r` | Custom | Ricarica la configurazione al volo |
+| `Ctrl + Shift + t` | Default | Apri una nuova Tab (Workspace) |
+| `Ctrl + Shift + Enter`| Default | Apri una nuova finestra affiancata nello stesso Tab |
+| `Ctrl + Shift + q` | Default | Chiudi la Tab o finestra corrente |
+| `Ctrl + Shift + → / ←`| Default | Passa alla Tab successiva / precedente |
+| `Ctrl + Shift + Alt + t`| Default | Rinomina la Tab corrente |
 
 ---
 
 ## 🪟 Tmux
+*Nota: Tutti i comandi (tranne i popup) richiedono la pressione del tasto `Prefix` (`Ctrl + b` di default) prima di essere eseguiti.*
 
-*Nota: La maggior parte di questi comandi richiede la pressione del tasto `Prefix` prima di essere eseguita.*
+### 🏢 Gestione Workspace (Sessioni e Finestre)
+| Scorciatoia | Tipo | Azione |
+| :--- | :--- | :--- |
+| `n` | Custom | Crea una **nuova sessione** (con prompt per il nome) |
+| `f` *(ripetibile)* | Custom | Lancia `tmux-sessionizer` in una nuova finestra |
+| `s` | Default | Mostra la lista interattiva di tutte le sessioni |
+| `w` | Default | Mostra l'albero interattivo di sessioni e finestre |
+| `d` | Default | Scollega (Detach) la sessione corrente (lasciandola in background) |
+| `$` | Default | Rinomina la sessione corrente |
+| `c` | Default | Crea una **nuova finestra** (Tab) |
+| `,` | Default | Rinomina la finestra corrente |
+| `p` | Default | Passa alla finestra (Tab) precedente *(Nota: 'n' è stato sovrascritto, usa 'w' per navigare)* |
+| `&` | Default | Chiudi (Kill) la finestra corrente |
 
-### Gestione Finestre e Pannelli
-| Scorciatoia | Azione |
-| :--- | :--- |
-| `r` | Ricarica il file di configurazione (`tmux.conf`) |
-| `\|` | Dividi il pannello verticalmente (mantiene il percorso attuale) |
-| `-` | Dividi il pannello orizzontalmente (mantiene il percorso attuale) |
-| `j` *(ripetibile)* | Espandi il pannello verso il basso (di 5 celle) |
-| `k` *(ripetibile)* | Espandi il pannello verso l'alto (di 5 celle) |
-| `l` *(ripetibile)* | Espandi il pannello verso destra (di 5 celle) |
-| `h` *(ripetibile)* | Espandi il pannello verso sinistra (di 5 celle) |
-| `m` *(ripetibile)* | Massimizza/Ripristina il pannello corrente (Zoom) |
-| `n` | Crea una nuova sessione (con prompt per il nome) |
-| `f` *(ripetibile)* | Lancia lo script `tmux-sessionizer` in una nuova finestra |
+### 🔲 Gestione Pannelli (Splits)
+| Scorciatoia | Tipo | Azione |
+| :--- | :--- | :--- |
+| `r` | Custom | Ricarica il file di configurazione (`tmux.conf`) |
+| `\|` | Custom | Dividi il pannello verticalmente (mantiene il percorso) |
+| `-` | Custom | Dividi il pannello orizzontalmente (mantiene il percorso) |
+| `j / k / l / h` | Custom | Espandi il pannello verso Giù/Su/Destra/Sinistra (di 5 celle) |
+| `m` *(ripetibile)* | Custom | Massimizza/Ripristina il pannello corrente (Zoom) |
+| `x` | Default | Chiudi (Kill) il pannello corrente |
+| `o` | Default | Salta al pannello successivo |
 
-### Popup Fluttuanti
-| Scorciatoia | Azione |
-| :--- | :--- |
-| `Ctrl + y` | Apri **Yazi** (File manager) in popup |
-| `Ctrl + t` | Apri terminale rapido (**Zsh**) in popup (80%) |
-| `Ctrl + g` | Apri **Lazygit** in popup |
-| `Ctrl + m` | Apri **rmpc** (Musica) in popup |
-| `F` | Apri un altro terminale **Zsh** in popup (bordi arrotondati, 85%) |
-| `N` | Apri **Neovim** in popup |
-| `d` | Apri il menu di configurazione centrale |
+### 🚀 Popup Fluttuanti
+| Scorciatoia | Tipo | Azione |
+| :--- | :--- | :--- |
+| `Ctrl + y` | Custom | Apri **Yazi** (File manager) in popup |
+| `Ctrl + t` | Custom | Apri terminale rapido (**Zsh**) in popup (80%) |
+| `Ctrl + g` | Custom | Apri **Lazygit** in popup |
+| `Ctrl + m` | Custom | Apri **rmpc** (Musica) in popup |
+| `F` | Custom | Apri terminale **Zsh** in popup (bordi arrotondati, 85%) |
+| `N` | Custom | Apri **Neovim** in popup |
+| `d` | Custom | Apri il menu di configurazione centrale |
 
-### Modalità Copia (Vi-mode)
-| Scorciatoia | Azione |
-| :--- | :--- |
-| `v` | Entra in modalità copia |
-| `v` | Inizia la selezione del testo (una volta in copy-mode) |
-| `y` | Copia la selezione (una volta in copy-mode) |
+### 📋 Modalità Copia (Vi-mode)
+| Scorciatoia | Tipo | Azione |
+| :--- | :--- | :--- |
+| `v` | Custom | Entra in modalità copia / Inizia selezione |
+| `y` | Custom | Copia la selezione |
 
 ---
 
 ## 📝 Neovim
 
-### 🧭 Movimento e Interfaccia
-| Tasto/Scorciatoia | Modalità | Azione |
+### 🪟 Finestre (Splits) e Schede (Tabs)
+| Tasto/Scorciatoia | Tipo | Azione |
 | :--- | :--- | :--- |
-| `Ctrl + d` | Normal | Scorri giù di mezza pagina (mantiene il cursore al centro) |
-| `Ctrl + u` | Normal | Scorri su di mezza pagina (mantiene il cursore al centro) |
-| `n` / `N` | Normal | Risultato ricerca successivo/precedente (centrato) |
-| `Ctrl + c` | Normal | Pulisci l'evidenziazione della ricerca |
-| `Ctrl + c` | Insert | Equivalente a `Esc` |
-| `<leader>u` | Normal | Attiva/Disattiva cronologia **Undotree** |
-| `<leader>ee` | Normal | Apri file explorer (**MiniFiles**) |
-| `<leader>cw` | Normal | Rimuovi gli spazi bianchi a fine riga (**MiniTrailspace**) |
+| `:tabe [file]` / `:tabnew`| Default | Apri un file in una **nuova scheda** (Tab) |
+| `<leader>to` | Custom | Apri una nuova scheda vuota |
+| `<leader>tx` / `:tabc` | Entrambi| Chiudi la scheda corrente |
+| `<leader>tn` / `:tabn` | Entrambi| Vai alla scheda successiva |
+| `<leader>tp` / `:tabp` | Entrambi| Vai alla scheda precedente |
+| `<leader>tf` | Custom | Apri il buffer corrente in una nuova scheda |
+| `:vsp [file]` | Default | Dividi verticalmente aprendo un file |
+| `:sp [file]` | Default | Dividi orizzontalmente aprendo un file |
+| `<leader>sv` | Custom | Dividi finestra verticalmente |
+| `<leader>sh` | Custom | Dividi finestra orizzontalmente |
+| `<leader>se` | Custom | Rendi le divisioni di uguale dimensione |
+| `<leader>sx` / `:q` | Entrambi| Chiudi la divisione corrente |
+| `Ctrl + w` + `h/j/k/l` | Default | Spostati tra le finestre divise |
+
+### 🧭 Movimento e Interfaccia
+| Tasto/Scorciatoia | Tipo | Azione |
+| :--- | :--- | :--- |
+| `Ctrl + d` / `Ctrl + u` | Custom | Scorri giù/su di mezza pagina (centrato) |
+| `n` / `N` | Custom | Risultato ricerca successivo/precedente (centrato) |
+| `Ctrl + c` | Custom | Pulisci evidenziazione ricerca / Equivalente a Esc |
+| `<leader>ee` | Custom | Apri file explorer (**MiniFiles**) |
+| `-` | Custom | Apri la directory corrente in **Oil** |
+| `Space c/` | Custom | Apri popup del terminale interno |
+| `Esc Esc` | Custom | Esci dalla modalità interattiva del terminale |
 
 ### ✂️ Modifica Testo
-| Tasto/Scorciatoia | Modalità | Azione |
+| Tasto/Scorciatoia | Tipo | Azione |
 | :--- | :--- | :--- |
-| `J` / `K` | Visual | Sposta le righe selezionate in giù / in su |
-| `J` | Normal | Unisci la riga sottostante (mantiene il cursore fermo) |
-| `<` / `>` | Visual | Riduci/Aumenta l'indentazione (mantenendo la selezione) |
-| `p` / `<leader>p`| Visual | Incolla testo senza sovrascrivere il registro di copia |
-| `<leader>Y` | Normal | Copia negli appunti di sistema |
-| `<leader>d` | Normal/Visual | Elimina testo senza salvarlo nel registro |
-| `x` | Normal | Elimina carattere senza salvarlo nel registro |
-| `<leader>s` | Normal | Trova e sostituisci la parola sotto il cursore |
-| `<leader>x` | Normal | Rendi il file corrente eseguibile (`chmod +x`) |
-| `<leader>f` | Normal | Formatta il file corrente |
-| `sj` / `sk` | Normal/Visual | Unisci (`sj`) o dividi (`sk`) gli argomenti (**MiniSplitJoin**) |
-| `<leader>xe` | Normal/Visual | Avvolgi con abbreviazione (**Emmet**) |
+| `J` / `K` | Custom | Sposta le righe selezionate in giù / in su (Visual) |
+| `<` / `>` | Custom | Riduci/Aumenta l'indentazione (Visual) |
+| `p` / `<leader>p` | Custom | Incolla senza sovrascrivere il registro di copia |
+| `<leader>Y` | Custom | Copia negli appunti di sistema |
+| `<leader>s` | Custom | Trova e sostituisci la parola sotto il cursore |
+| `<leader>x` | Custom | Rendi il file corrente eseguibile (`chmod +x`) |
+| `<leader>f` | Custom | Formatta il file corrente |
 
-### 🪟 Finestre (Splits) e Schede (Tabs)
-| Tasto/Scorciatoia | Modalità | Azione |
+### 🧠 Navigazione Progetto e LSP (Telescope & Harpoon)
+| Tasto/Scorciatoia | Tipo | Azione |
 | :--- | :--- | :--- |
-| `<leader>sv` | Normal | Dividi finestra verticalmente |
-| `<leader>sh` | Normal | Dividi finestra orizzontalmente |
-| `<leader>se` | Normal | Rendi le divisioni di uguale dimensione |
-| `<leader>sx` | Normal | Chiudi la divisione corrente |
-| `<leader>to` | Normal | Apri una nuova scheda |
-| `<leader>tx` | Normal | Chiudi la scheda corrente |
-| `<leader>tn` | Normal | Vai alla scheda successiva |
-| `<leader>tp` | Normal | Vai alla scheda precedente |
-| `<leader>tf` | Normal | Apri il buffer corrente in una nuova scheda |
-
-### 🧠 LSP, Diagnostica e Debug
-| Tasto/Scorciatoia | Modalità | Azione |
-| :--- | :--- | :--- |
-| `gD` | Normal | Vai alla dichiarazione |
-| `gd` | Normal | Vai alla definizione (Telescope) |
-| `gR` | Normal | Trova riferimenti (Telescope) |
-| `gi` | Normal | Trova implementazioni (Telescope) |
-| `gt` | Normal | Trova definizioni di tipo (Telescope) |
-| `K` | Normal | Mostra documentazione all'hover |
-| `Ctrl + h` | Insert | Mostra la firma della funzione (Signature help) |
-| `<leader>vca` | Normal/Visual| Mostra le Code Actions disponibili |
-| `<leader>rn` | Normal | Rinomina variabile ovunque |
-| `<leader>D` | Normal | Mostra diagnostica del buffer (Telescope) |
-| `<leader>d` | Normal | Mostra diagnostica in una finestra fluttuante |
-| `<leader>rs` | Normal | Riavvia il server LSP |
-| `<leader>db` | Normal | Inserisci/Rimuovi Breakpoint di debug |
-| `<leader>dc` | Normal | Avvia/Continua l'esecuzione di debug |
-
-### 🌳 Navigazione (Telescope, Harpoon, Oil)
-| Tasto/Scorciatoia | Modalità | Azione |
-| :--- | :--- | :--- |
-| `-` | Normal | Apri la directory padre in **Oil** |
-| `<leader>-` | Normal | Apri **Oil** in una finestra fluttuante |
-| `<leader>pr` | Normal | Cerca file recenti (**Telescope**) |
-| `<leader>ths` | Normal | Selettore Tema (**Telescope**) |
-| `<leader>a` | Normal | Aggiungi file ad **Harpoon** |
-| `Ctrl + e` | Normal | Apri menu **Harpoon** |
-| `Ctrl + y / i / n / s` | Normal | Naviga velocemente tra i file salvati in **Harpoon** |
-| `Ctrl + Shift + N/P` | Normal | File successivo/precedente in **Harpoon** |
-| `]t` / `[t` | Normal | Vai al commento TODO successivo/precedente |
+| `<leader>pr` | Custom | Cerca file recenti (**Telescope**) |
+| `<leader>ths` | Custom | Selettore Tema (**Telescope**) |
+| `<leader>a` | Custom | Aggiungi file ad **Harpoon** |
+| `Ctrl + e` | Custom | Apri menu **Harpoon** |
+| `Ctrl + y / i / n / s`| Custom | Naviga velocemente nei primi 4 file di Harpoon |
+| `gD` / `gd` | Custom | Vai alla dichiarazione / definizione |
+| `gR` / `gi` | Custom | Trova riferimenti / implementazioni |
+| `K` | Custom | Mostra documentazione all'hover |
+| `<leader>rn` | Custom | Rinomina variabile ovunque |
+| `<leader>d` | Custom | Mostra diagnostica errori in finestra fluttuante |
 
 ### 🌿 Git (Fugitive & Gitsigns)
-| Tasto/Scorciatoia | Modalità | Azione |
+| Tasto/Scorciatoia | Tipo | Azione |
 | :--- | :--- | :--- |
-| `<leader>gg` | Normal | Apri Git status |
-| `<leader>t` | Normal | Push verso origin (`Git push -u origin`) |
-| `]h` / `[h` | Normal | Passa alla modifica (hunk) successiva / precedente |
-| `<leader>gs` | Normal/Visual| Metti in stage l'hunk (o la selezione) |
-| `<leader>gr` | Normal/Visual| Resetta l'hunk (o la selezione) |
-| `<leader>gS` | Normal | Metti in stage l'intero buffer |
-| `<leader>gR` | Normal | Resetta l'intero buffer |
-| `<leader>gu` | Normal | Annulla lo stage dell'hunk |
-| `<leader>gp` | Normal | Anteprima dell'hunk (diff locale) |
-| `<leader>gbl` | Normal | Mostra il "Blame" completo per la riga corrente |
-| `<leader>gB` | Normal | Attiva/Disattiva il Blame laterale per tutte le righe |
-| `<leader>gd` / `<leader>gD`| Normal | Esegui il diff del file corrente / della working tree |
-| `ih` | Object/Visual| Seleziona l'intero hunk corrente |
-
-### 🖥️ Varie
-| Tasto/Scorciatoia | Modalità | Azione |
-| :--- | :--- | :--- |
-| `Ctrl + f` | Normal | Avvia `tmux-sessionizer` direttamente da Neovim |
-| `zR` | Normal | Apri tutti i "folds" (UFO) |
-| `zM` | Normal | Chiudi tutti i "folds" (UFO) |
-| `Space c/` | Normal/Term | Apri popup del terminale interno a Neovim |
-| `Esc Esc` | Terminal | Esci dalla modalità interattiva del terminale Neovim |
+| `<leader>gg` | Custom | Apri Git status |
+| `<leader>t` | Custom | Push verso origin (`Git push -u origin`) |
+| `]h` / `[h` | Custom | Passa alla modifica (hunk) successiva / precedente |
+| `<leader>gs` / `<leader>gr`| Custom | Stage / Reset della modifica sotto il cursore |
+| `<leader>gd` | Custom | Esegui il diff del file corrente |
