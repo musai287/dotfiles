@@ -130,7 +130,30 @@ if ask "Kitty Terminal"; then
     echo -e "${BLUE}Creazione symlink per Kitty...${NC}"
     link_file "$DOTFILES_DIR/kitty" "$HOME/.config/kitty"
 fi
+# --- YAZI & GLOW ---
+if ask "Yazi (File manager), Glow (Markdown) e FFmpeg"; then
+    echo -e "${BLUE}Installazione Yazi, Glow e dipendenze multimediali...${NC}"
+    
+    if command -v dnf >/dev/null 2>&1; then
+        # Setup per Fedora
+        sudo dnf copr enable -y lihaohong/yazi
+        sudo sh -c 'echo -e "[charm]\nname=Charm\nbaseurl=https://repo.charm.sh/yum/\nenabled=1\ngpgcheck=1\ngpgkey=https://repo.charm.sh/yum/gpg.key" > /etc/yum.repos.d/charm.repo'
+        $PKG_INSTALL yazi ffmpeg glow
+    elif command -v apt >/dev/null 2>&1; then
+        # Setup per Debian/Ubuntu
+        $PKG_INSTALL ffmpeg curl gpg
+        # Repository ufficiale per Glow
+        sudo mkdir -p /etc/apt/keyrings
+        curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
+        echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
+        sudo apt update && sudo apt install -y glow
+        # Avviso per Yazi (su apt non c'è una repo ufficiale, meglio usare cargo)
+        echo -e "${YELLOW}Nota: Per installare Yazi su Debian/Ubuntu, esegui successivamente: cargo install --locked yazi-fm yazi-cli${NC}"
+    fi
 
+    echo -e "${BLUE}Creazione symlink per Yazi...${NC}"
+    link_file "$DOTFILES_DIR/yazi" "$HOME/.config/yazi"
+fi
 # ---------------------------------------------------------
 # FINE
 # ---------------------------------------------------------

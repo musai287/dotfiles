@@ -145,7 +145,14 @@ if ask "Kitty Terminal"; then
     echo -e "${BLUE}Creazione symlink per Kitty...${NC}"
     link_file "$DOTFILES_DIR/kitty" "$HOME/.config/kitty"
 fi
+# --- YAZI & GLOW ---
+if ask "Yazi (File manager), Glow (Markdown) e FFmpeg"; then
+    echo -e "${BLUE}Installazione Yazi, Glow e FFmpeg...${NC}"
+    brew install yazi ffmpeg glow
 
+    echo -e "${BLUE}Creazione symlink per Yazi...${NC}"
+    link_file "$DOTFILES_DIR/yazi" "$HOME/.config/yazi"
+fi
 # ---------------------------------------------------------
 # FINE
 # ---------------------------------------------------------
