@@ -126,3 +126,20 @@ Questo documento contiene sia le scorciatoie personalizzate (Custom) sia i coman
 | `]h` / `[h` | Custom | Passa alla modifica (hunk) successiva / precedente |
 | `<leader>gs` / `<leader>gr`| Custom | Stage / Reset della modifica sotto il cursore |
 | `<leader>gd` | Custom | Esegui il diff del file corrente |
+
+## 📁 Yazi (File Manager)
+
+| Scorciatoia | Azione |
+| :--- | :--- |
+| `Prefix` + `Ctrl+y` | Apri Yazi da Tmux (Finestra/Pannello) |
+| `h`, `j`, `k`, `l` | Navigazione su/giù e tra le cartelle |
+| `.` | Mostra/Nascondi file e cartelle nascoste |
+| `Space` | Seleziona/Deseleziona il file corrente |
+| `v` | Attiva la modalità selezione visuale |
+| `y` | Copia i file selezionati (Yank) |
+| `x` | Taglia i file selezionati |
+| `p` | Incolla i file copiati/tagliati |
+| `r` | Rinomina il file selezionato |
+| `a` / `A` | Crea un nuovo file / Crea una nuova cartella |
+| `d` | Sposta il file selezionato nel cestino |
+| `q` | Esci da Yazi |
