@@ -3,3 +3,4 @@ tree-structure.txt
 __pycache__/
 nvim/lua/lsp_test.lua
 tmux/.tmux/plugins/
+yazi/flavors
