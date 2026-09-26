@@ -1,3 +1,4 @@
 tree-structure.txt
 .DS_Store
 __pycache__/
+nvim/lua/lsp_test.lua
