@@ -4,3 +4,4 @@ __pycache__/
 nvim/lua/lsp_test.lua
 tmux/.tmux/plugins/
 yazi/flavors
+nvim/lazy-lock.json
