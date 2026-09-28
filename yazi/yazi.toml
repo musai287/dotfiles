@@ -4,12 +4,3 @@ image_quality = 90
 max_width = 1920
 max_height = 1080
 
-[opener]
-edit = [
-	{ run = 'nvim "$@"', block = true, desc = "Neovim" },
-]
-
-[open]
-rules = [
-	{ mime = "text/*", use = "edit" },
-]
