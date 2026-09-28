@@ -19,7 +19,7 @@ return {
         laststatus = 0, -- Nasconde la lualine per un look pulitissimo
       },
     },
-    -- Forza l'uso di una finestra fluttuante con bordo
+    -- Forza l'uso di una finestra fluttuante con bordo e gestisce l'uscita
     on_open = function(win)
       local config = vim.api.nvim_win_get_config(win)
       config.border = "rounded" -- Ecco il tuo bordo arrotondato!
@@ -29,6 +29,18 @@ return {
       -- Applica il colore azzurro che abbiamo impostato in options.lua
       vim.api.nvim_set_hl(0, "ZenBorder", { fg = "#89b4fa" })
       vim.api.nvim_win_set_option(win, "winhl", "FloatBorder:ZenBorder")
+
+      -- AUTOCLOSE: Intercetta il :q e chiude tutto
+      vim.api.nvim_create_autocmd("QuitPre", {
+        buffer = 0, -- Applica la regola al buffer corrente
+        once = true, -- Esegui una volta sola per evitare loop
+        callback = function()
+          -- Verifica di essere nella finestra fluttuante di ZenMode
+          if vim.api.nvim_get_current_win() == win then
+            vim.cmd("qa")
+          end
+        end,
+      })
     end,
   },
 }
