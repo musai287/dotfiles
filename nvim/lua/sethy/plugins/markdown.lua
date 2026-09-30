@@ -9,6 +9,6 @@ return {
   init = function()
     vim.g.mkdp_filetypes = { "markdown" }
     -- Sostituisci con 'chrome', 'brave', 'safari' o il tuo browser predefinito
-    vim.g.mkdp_browser = 'firefox' 
+    vim.g.mkdp_browser = 'firefox'
   end,
 }
