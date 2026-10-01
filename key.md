@@ -143,3 +143,40 @@ Questo documento contiene sia le scorciatoie personalizzate (Custom) sia i coman
 | `a` / `A` | Crea un nuovo file / Crea una nuova cartella |
 | `d` | Sposta il file selezionato nel cestino |
 | `q` | Esci da Yazi |
+
+## 📓 Neovim Jupyter Notebooks (`ipynb.nvim`)
+
+Il plugin divide il lavoro in due modalità:
+* **Notebook Mode** *(default all'apertura)*: buffer bloccato per navigare, riordinare ed eseguire le celle.
+* **Cell Mode**: buffer isolato per modificare il codice della singola cella con LSP attivo.
+
+### 🧭 Navigazione e Modifica
+| Tasto | Modalità | Azione |
+| :--- | :--- | :--- |
+| `]]` / `[[` | Notebook | Vai alla cella successiva / precedente |
+| `i` | Notebook | Entra nella cella direttamente in **Insert Mode** |
+| `<CR>` (Invio) | Notebook | Entra nella cella in **Normal Mode** |
+| `<Esc>` | Cell (Normal) | Esci dalla cella e torna al **Notebook Mode** |
+| `:w` | Entrambe | Salva il file `.ipynb` |
+
+### 🧱 Gestione Celle (Notebook Mode)
+| Tasto | Azione |
+| :--- | :--- |
+| `<leader>kb` | Crea una nuova cella **sotto** (Below) |
+| `<leader>ka` | Crea una nuova cella **sopra** (Above) |
+| `<leader>ky` | Converti la cella in **Codice** (Python) |
+| `<leader>km` | Converti la cella in **Markdown** |
+| `dd` | Taglia/elimina la cella corrente |
+| `p` / `P` | Incolla la cella sotto / sopra |
+
+### ⚡ Kernel ed Esecuzione
+| Tasto / Comando | Azione |
+| :--- | :--- |
+| `<leader>ks` | Avvia / Seleziona il kernel Jupyter (`:NotebookKernelStart`) |
+| `<leader>kx` | Esegui la cella corrente (`:NotebookExecuteCell`) |
+| `<leader>ko` | Apri l'output della cella in una finestra flottante (`:NotebookOutput`) |
+| `<leader>kc` | Pulisci l'output della cella corrente |
+| `<leader>kC` | Pulisci tutti gli output del notebook |
+| `<leader>kh` | Ispeziona variabile sotto il cursore |
+| `:NotebookFormatCell` | Formatta la cella corrente con l'LSP |
+| `:NotebookFormatAll` | Formatta tutte le celle del notebook |
