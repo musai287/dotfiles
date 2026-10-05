@@ -18,7 +18,7 @@ Stack
 Quick install
 1. Clone the repo:
 ```bash
-git clone [https://github.com/musai287/dotfiles.git](https://github.com/musai287/dotfiles.git) ~/dotfiles
+git clone https://github.com/musai287/dotfiles.git ~/dotfiles
 ```
 
 2. Run the interactive setup script based on your OS:
