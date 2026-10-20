@@ -67,7 +67,7 @@ Stack
 Installazione rapida
 1. Clona la repo:
 ```bash
-git clone [https://github.com/musai287/dotfiles.git](https://github.com/musai287/dotfiles.git) ~/dotfiles
+git clone https://github.com/musai287/dotfiles.git ~/dotfiles
 ```
 
 2. Esegui lo script interattivo in base al tuo sistema operativo:
